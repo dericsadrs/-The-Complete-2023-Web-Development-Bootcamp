@@ -2,11 +2,24 @@
   background-color: purple;
 }
 
-.box {
+ .box {
   background-color: blue;
   padding: 10px;
 }
 
+p {
+  color: yellow;
+  margin: 0;
+  padding: 0;
+}
+
+.white-text {
+  color:white;
+}
+.inner-box{
+  background-color: red;
+}
+/* 
 .inner-box {
   background-color: red;
 }
@@ -19,4 +32,4 @@ p {
 
 .white-text {
   color: white;
-}
+}  */
