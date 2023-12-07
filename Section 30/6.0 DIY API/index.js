@@ -24,29 +24,23 @@ app.get("/jokes/:id", (req,res) => {
 //3. GET a jokes by filtering on the joke type
 app.get("/filter", (req, res) => {
   const type = req.query.type;
+  console.log("req.query.type: ", req.query.type)
   const filteredActivities = jokes.filter((joke) => joke.jokeType === type);
   res.json(filteredActivities);
 });
 
 
-app,post("jokes", (req,res) => {
+app.post("jokes", (req,res) => {
   const newJoke = {
     id: jokes.length + 1,
     jokeText: req.body.text,
     jokeType: req.body.type,
   };
-  
+  jokes.push(newJoke);
+  console.log(jokes.slice(-1));
+  res.json(newJoke);
 })
 
-//4. POST a new joke
-
-//5. PUT a joke
-
-//6. PATCH a joke
-
-//7. DELETE Specific joke
-
-//8. DELETE All jokes
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
