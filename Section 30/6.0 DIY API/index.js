@@ -51,6 +51,46 @@ app.post("jokes", (req,res) => {
 })
 
 
+app.put("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const replacementJoke = {
+    id: id,
+    jokeText: req.body.text,
+    jokeType: req.body.type
+  }
+
+  //48
+  const serachIndex = jokes.findIndex((joke) => joke.id === id);
+  joke[serachIndex] = replacementJoke;
+
+})
+
+app.patch("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const existingJoke = jokes.find((joke) => joke.id === id);
+  const replacementJoke = {
+    id: id,
+    jokeText: req.body.text || existingJoke.jokeText,
+    jokeType: req.body.type || existingJoke.jokeType,
+  };
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = replacementJoke;
+  console.log(jokes[searchIndex]);
+  res.json(replacementJoke);
+});
+
+app.delete("/jokes/:id", (req,res) =>{
+  const id = parseInt(req.params.id);
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  if ( searchIndex > -1) {
+    jokes.splice(searchIndex, 1)
+    res.sendStatus(200); 
+   }
+   else {
+    res.status(404).json({ error: `Joke with id: ${id} not found. No jokes were deleted.` });
+   }
+})
+
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
 });
