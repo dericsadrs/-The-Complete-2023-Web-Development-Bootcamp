@@ -31,14 +31,23 @@ app.get("/filter", (req, res) => {
 
 
 app.post("jokes", (req,res) => {
+  
+  // create a new object joke to store the newJoke during runtime
   const newJoke = {
-    id: jokes.length + 1,
+
+    // then get the jokes length and add 1 to specify the newJoke as new id
+    id: jokes.length + 1, 
+    // then store the req.body.text in the JokeText
     jokeText: req.body.text,
+    // then also store the type
     jokeType: req.body.type,
   };
+
+  // push the new Joke in the jokes array of objects
   jokes.push(newJoke);
+  // access the lasst index of the array of objects
   console.log(jokes.slice(-1));
-  res.json(newJoke);
+  res.json(newJoke);;
 })
 
 
