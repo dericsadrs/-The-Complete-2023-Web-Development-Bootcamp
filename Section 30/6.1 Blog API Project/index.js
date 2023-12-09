@@ -52,7 +52,10 @@ app.get("/posts/:id", (req,res) => {
 })
 //CHALLENGE 3: POST a new post
 app.post("posts", (req, res) => {
+  // get the last index of Id and add 1 to specify it as new post id
   const newId = lastId +=1;
+
+  // store the data from the user to the post object
   const post = {
     id: newId,
     title: req.body.title,
@@ -62,16 +65,21 @@ app.post("posts", (req, res) => {
   }
   lastId = newId;
   posts.push(post)
-
   res.status(201).json(post);
 
 })
 
 //CHALLENGE 4: PATCH a post when you just want to update one parameter 
 app.patch("posts", (req,res) => {
+
+  // parse the params.id into Int then find the matching id in the posts id using the find method
   const post = posts.find((p) => p.id === parseInt(req.params.id));
+
+  // if post is not found then return a 404 error
   if (!post) return res.status(404).json({ message: "Post not found" });
 
+  // checks if req.body. params has any value 
+  // if it has value then update the value of it by the params
   if (req.body.title) post.title = req.body.title;
   if (req.body.content) post.content = req.body.content;
   if (req.body.author) post.author = req.body.author;
