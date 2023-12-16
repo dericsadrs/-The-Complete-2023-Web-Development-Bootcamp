@@ -16,17 +16,29 @@ const db = new pg.Client({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// an async function to check if the country is already visited
 async function checkVisisted() {
+
+  // use the await.db.query return the query results 
   const result = await db.query("SELECT country_code FROM visited_countries");
   let countries = [];
+
+  //iterate through each country and push the country_code to the countries array
   result.rows.forEach((country) => {
     countries.push(country.country_code);
   });
+
+  // return countries array
   return countries;
 }
 // GET home page
 app.get("/", async (req, res) => {
+
+  // get the countries that are visited
+  // since this is an asynchrounous function we await the function checkVisited if it's done processing the query
   const countries = await checkVisisted();
+
+  // then render the countries values and the countries length
   res.render("index.ejs", { countries: countries, total: countries.length });
 });
 
