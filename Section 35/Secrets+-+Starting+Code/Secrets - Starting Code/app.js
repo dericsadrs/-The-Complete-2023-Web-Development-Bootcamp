@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
-
+import mongoose from "mongoose";
+import nodemon from "nodemon";
 
 const app = express()
 const port = 3001
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+mongoose.connect("mongodb://localhost:27017/userDB",{userNewUrlParser: true});
 
 app.get("/", function(req,res) {
     res.render("home");
